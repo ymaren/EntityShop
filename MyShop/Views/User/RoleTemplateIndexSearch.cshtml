@@ -1,0 +1,36 @@
+﻿@model MyShop.Models.UserViewModel
+@using MyShop.Models.MyShopModels
+
+<div class="row align-items-center">
+    <fieldset class="col-md-10 alert-info border-dark">
+        <legend> <strong>Select user credential</strong> </legend>
+        <ul type="none">
+            @{
+                List<Credential> list = Model.allCredential;
+            }
+            @foreach (MyShop.Models.MyShopModels.Credential g in Model.allCredential.Where(c => c.ParentCredentialId == 0))
+            {
+                <ul type="none">
+                    <li>
+                        <input type="checkbox"
+                               name="SelectedCredential" value="@g.Id" id="@g.Id"
+                               @{if (Model.user != null && Model.user.Credential.Exists(c => c.Id == g.Id)) { <text> checked='checked' </text>  } } />
+                        <label for="@g.Id"><strong>@g.FullNameCredential  </strong> </label>
+                        @foreach (MyShop.Models.MyShopModels.Credential subCred in @list.Where(c => c.ParentCredentialId == g.Id))
+                        {
+                            <ul type="none">
+                                <li>
+                                    <input type="checkbox"
+                                           name="SelectedCredential" value="@subCred.Id" id="@subCred.Id"
+                                           @{if (Model.user != null && Model.user.Credential.Exists(c => c.Id == subCred.Id)) { <text> checked='checked' </text>  } } />
+                                    <label for="subCred.Id">@subCred.FullNameCredential</label>
+                                </li>
+                            </ul>
+                        }
+
+                    </li>
+                </ul>
+            }
+        </ul>
+    </fieldset>
+</div>

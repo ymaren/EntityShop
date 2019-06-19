@@ -1,0 +1,67 @@
+﻿@model MyShop.Models.Cart
+@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+
+    <Table align="right">
+        <tr align="left">
+            <td colspan="2">
+
+                <strong> @Html.ActionLink("Hello, " + User.Identity.GetUserName(), "Register", "Account", new { returnUrl =Request.Url.PathAndQuery }, htmlAttributes: new {title = "Manage" })</strong>
+
+                <strong>@Html.ActionLink("LogOff", "LogOff", "Account")</strong>
+            </td>
+            <td></td>
+        <tr>
+        <tr>
+            <td>
+                <div align="right">
+                    <a href='@Url.Action("Index", "Cart", new { returnUrl = Request.Url.PathAndQuery,@class = "btn btn-default navbar-btn" })'>
+                        <img src='@Url.Content("/Pictures/Service/Cart.jpg")' width="50" height="40" align="left" />
+                </div>
+            </td>
+            <td>
+                @Model.Lines.Sum(x => x.Quantity) goods, @Model.ComputeTotalValue().ToString("# грн.")
+            </td>
+        <tr>
+    </Table>
+
+}
+else
+{
+
+    <Table align="right">
+        <tr align="left">
+            <td colspan="2">
+                @Html.ActionLink("Log in to your account", "Login", "Account")
+            </td>            
+        <tr>
+        <tr>
+            <td>
+                <div align="right">
+                    <a href='@Url.Action("Index", "Cart", new { returnUrl = Request.Url.PathAndQuery,@class = "btn btn-default navbar-btn" })'>
+                        <img src='@Url.Content("/Pictures/Service/Cart.jpg")' width="40" height="40" align="left" />
+                </div>
+            </td>
+            <td>
+                @Model.Lines.Sum(x => x.Quantity) goods, @Model.ComputeTotalValue().ToString("# грн.")
+            </td>
+        <tr>
+    </Table>
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+

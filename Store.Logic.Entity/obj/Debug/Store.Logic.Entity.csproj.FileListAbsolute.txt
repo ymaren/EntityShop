@@ -1,0 +1,6 @@
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.Entity\bin\Debug\Store.Logic.Entity.dll
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.Entity\bin\Debug\Store.Logic.Entity.pdb
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.Entity\obj\Debug\Store.Logic.Entity.csprojAssemblyReference.cache
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.Entity\obj\Debug\Store.Logic.Entity.csproj.CoreCompileInputs.cache
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.Entity\obj\Debug\Store.Logic.Entity.dll
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.Entity\obj\Debug\Store.Logic.Entity.pdb

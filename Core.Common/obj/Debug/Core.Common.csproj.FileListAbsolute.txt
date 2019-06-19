@@ -1,0 +1,6 @@
+C:\Users\yevhen.marenkov\source\repos\MyShop\Core.Common\bin\Debug\Core.Common.dll
+C:\Users\yevhen.marenkov\source\repos\MyShop\Core.Common\bin\Debug\Core.Common.pdb
+C:\Users\yevhen.marenkov\source\repos\MyShop\Core.Common\obj\Debug\Core.Common.csprojAssemblyReference.cache
+C:\Users\yevhen.marenkov\source\repos\MyShop\Core.Common\obj\Debug\Core.Common.csproj.CoreCompileInputs.cache
+C:\Users\yevhen.marenkov\source\repos\MyShop\Core.Common\obj\Debug\Core.Common.dll
+C:\Users\yevhen.marenkov\source\repos\MyShop\Core.Common\obj\Debug\Core.Common.pdb

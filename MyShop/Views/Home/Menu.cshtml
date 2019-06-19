@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MyShop.Models.MyShopModels.Credential>
+@using MyShop.Helpers
+@Styles.Render("~/Content/css")
+
+
+@helper BuildMenu(IEnumerable<MyShop.Models.MyShopModels.Credential> data, int? parentId = 0)
+
+{
+    var items = data.Where(d => d.ParentCredentialId == parentId).OrderBy(i => i.Order);
+    if (items.Any())
+    {
+
+        <div class="menu">
+            <ul>
+                @foreach (var item in items)
+                {
+                    <li>
+                        <a  href="@item.Url">@item.FullNameCredential</a>
+                        @MyHelpers.CreateSubMenu(Html, data, item.Id)
+                    </li>
+                }
+            </ul>
+        </div>
+
+    }
+
+}
+@BuildMenu(Model)
+

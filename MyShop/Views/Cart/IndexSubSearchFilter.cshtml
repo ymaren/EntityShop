@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MyShop.Models.MyShopModels.Order>
+@{
+    int i = 1;
+}
+@foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @(i++)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderType.OrderTypeName)
+            </td>
+            <td>
+                <strong> @item.OrderAmount.ToString() UAH</strong>
+            </td>
+        </tr>
+    }

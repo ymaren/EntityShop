@@ -1,0 +1,173 @@
+﻿@model MyShop.Models.MyShopModels.Order
+
+@{
+    ViewBag.Title = "Product order";
+}
+@*HttpContext.Current.User.Identity.IsAuthenticated*@
+
+
+@if (HttpContext.Current.User.Identity.IsAuthenticated ||ViewData.ModelState.IsValid)
+{
+
+    <div class="container">
+        <div class="row">
+            <table class="align-content-center">
+                <tr>
+                    <td align="right">
+                        <img width="80" height="60" hspace="5" src=@Url.Content( string.Format("/Pictures/Service/order_successful.jpg"))>
+                    </td>
+                    <td align="left">
+                        <h2>
+                            Thank you, your order
+                            <strong>@Html.DisplayTextFor(c => c.OrderNumber)</strong> is accepted
+                        </h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left" colspan="1">
+                        <h2>  <strong> Amount to pay: @Model.OrderAmount.ToString("# UAN")</strong></h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <h2>
+                            @Html.LabelFor(c => c.User.UserCountry) :
+                            @Html.DisplayTextFor(c => c.User.UserCountry)
+                        </h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <h2>
+                            @Html.LabelFor(c => c.User.UserAddress):
+                            @Html.DisplayTextFor(c => c.User.UserAddress)
+                        </h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <h2>
+                            Recipient:
+                            @Html.DisplayTextFor(c => c.User.UserName)
+                        </h2>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    using (Html.BeginForm(new { @class = "align-content-center" }))
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-1"></div>
+            <fieldset class="col-md-8 align-content-center alert-info border-dark">
+                <legend> <strong>Create order</strong> </legend>
+                <div>
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            <strong>@Html.LabelFor(model => model.User.UserEmail, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.User.UserEmail, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.UserEmail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            <strong>@Html.LabelFor(model => model.User.UserName, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.User.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            <strong>@Html.LabelFor(model => model.User.UserCountry, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.User.UserCountry, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.UserCountry, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            <strong>@Html.LabelFor(model => model.User.UserAddress, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.User.UserAddress, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.UserAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <div class="col-md 4">
+                                <input type="submit" value="Create order" class="btn btn-success" /> <br />
+                            </div>
+                        </div>
+                    </div>
+</fieldset>
+        </div>
+    }
+}
+
+<div class="text-xl-left">
+    <a class="btn btn-primary" href="/Home/Index/">Back to the store</a>
+</div>
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm())
+    {
+        <h3>Данные</h3>
+        <div class="form-group">
+            <label>Ваше имя:</label>
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        </div>
+
+        <h3>Адрес доставки</h3>
+        <div class="form-group">
+            <label>Первый адрес:</label>
+            @Html.TextBoxFor(x => x.Line1, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Второй адрес:</label>
+            @Html.TextBoxFor(x => x.Line2, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Третий адрес:</label>
+            @Html.TextBoxFor(x => x.Line3, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Город:</label>
+            @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Страна:</label>
+            @Html.TextBoxFor(x => x.Country, new { @class = "form-control" })
+        </div>
+
+        <h3>Опции</h3>
+        <div class="checkbox">
+            <label>
+                @Html.EditorFor(x => x.GiftWrap)
+                Использовать подарочную упаковку?
+            </label>
+        </div>
+
+        <div class="text-center">
+            <input class="btn btn-primary" type="submit" value="Обработать заказ" />
+        </div>
+    }*@

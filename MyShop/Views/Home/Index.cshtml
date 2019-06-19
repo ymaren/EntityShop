@@ -1,0 +1,191 @@
+﻿@model MyShop.Models.IndexProductViewModel
+@using MyShop.Helpers
+@{
+    /**/
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    @Scripts.Render("~/scripts/jquery-3.3.1.min.js")
+    @Scripts.Render("~/scripts/jquery.signalR-2.4.1.min.js")
+    @Scripts.Render("~/scripts/utilSignalR.js")
+    @Scripts.Render("~/scripts/signalr/hubs")
+    
+    @*@Styles.Render("~/Content/css")*@
+}
+<script src="~/signalr/hubs"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnShow_Hide_form").click(function () {
+
+            //alert("911");
+            if ($('#fieldforcontactform').css("width") == "35px") {
+                $('#fieldforcontactform').css("width", "400px");
+                $('#div_form').fadeIn(0.01);
+                $('#btnShow_Hide_form').attr('src', '/Pictures/Service/btnHide.bmp');
+
+                //$('#myname').animate({ 'top': '0' }, 1000);
+                //$('#myname').animate({ 'right': '100%' }, 1000);
+            }
+            else {
+                $('#fieldforcontactform').css("width", "35px");
+                $('#div_form').fadeOut(0.01);
+                $('#btnShow_Hide_form').attr('src', '/Pictures/Service/btnShow.bmp');
+
+                //$('#myname').animate({ 'top': '200px' }, 1000);
+                //$('#myname').animate({ 'right': '0' }, 1000);
+
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Main product store</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="row justify-content-around">
+            <div class="col-lg-7 col-md-7 col-sm-7 col-7">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink(Model.CurrentCategory != null ? Model.CurrentCategory.CategoryName : " ", "Index", new { category = Model.CurrentCategory != null ? Model.CurrentCategory.Id : 0 })
+                    </li>
+                    @if (Model.CurrentGroup != null)
+                    {
+                        <li class="breadcrumb-item active">@Model.CurrentGroup.GroupName</li>
+                    }
+                </ul>
+            </div>
+            <div class="col-2 offset-md-3">
+                <form name=orderForm method="post">
+
+                    @Html.DropDownList("sort", new SelectList(new []
+                           {
+                           new SelectListItem { Text = "not sort", Value = "not_sort" },
+                           new SelectListItem { Text = "first cheap", Value = "first_cheap" },
+                           new SelectListItem { Text = "first expensive", Value = "first_expensive" },
+                            }, "Value", "Text", this.Model.CurrentOrder.Value.ToString()), new { @class = "btn btn-secondary dropdown-toggle", @onChange = "orderForm.submit();" })
+
+
+
+                    @*<select class="btn btn-secondary dropdown-toggle" name="sort" size="1" onChange="orderForm.submit();">
+
+
+                            <option value="not_sort">not sort</option>
+                            <option value="first_cheap" selected>first cheap</option>
+                            <option value="first_expensive">first expensive</option>
+
+                        </select>*@
+                </form>
+            </div>
+
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model.Products)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="card">
+                        <div class="card-img-top">
+                            <img class="card-img-top" src=@Url.Content(string.Format("/Pictures/{0}.jpg", @item.Id)) h>
+                        </div>
+                        <div class="card-body">
+                            @*<div class="card-header">
+                                    <strong>Code:</strong>@item.ProductCode
+                                </div>*@
+                            <div class="card-text align-content-center">
+                                <strong>@item.Name</strong>
+                            </div>
+                            <div>
+                            </div>
+                            <div>
+                                <strong>Price:</strong>@item.Price.ToString("#UAH")
+                            </div>
+                            <div>
+                                @using (Html.BeginForm("AddToCart", "Cart"))
+                                {
+                                    <div>
+                                        @Html.Hidden("id", @item.Id)
+                                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                                        <input type="submit" class="btn-success btn-sm" value="Add to cart" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div align="left">
+            @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new
+       {
+
+           category = Model.CurrentCategory != null ? Model.CurrentCategory.Id.ToString() : "",
+           group = Model.CurrentGroup != null ? Model.CurrentGroup.Id.ToString() : "",
+           sort=Model.CurrentOrder,
+           page = x
+       }))
+        </div>
+
+
+    </div>
+
+
+    <div id="fieldforcontactform">
+        <img id="btnShow_Hide_form" src="/Pictures/Service/btnHide.bmp" hspac="0">
+        <div id="div_form">
+            <form name="form1" action="//formspree.io/evgmarenkov@gmail.com" target="_blank" method="POST" id="Inputform">
+                <fieldset>
+                    <legend> <strong>Contact form</strong>  </legend>
+                    @*<div class="main">*@
+                    <div id="loginBlock">
+                        Enter your name:<br />
+                        @Html.TextBox("_", @HttpContext.Current.User.Identity.Name??"", new { id = "txtUserName" })
+                        @*<input id="txtUserName" type="text" />*@
+                        <input id="btnLogin" type="button" value="Enter" />
+                    </div>
+                    <div id="chatBody">
+                        <div id="header"></div>
+
+                        <div id="chatroomHeader" style="overflow-y:auto;height:100px; background-color:whitesmoke">
+                            <div id="chatroom" style="text-align: right;"></div>
+                        </div> 
+                        <div id="inputForm">
+                            
+                            <input type="text" width="100" id="message" />
+                            <input type="button" id="sendmessage" value="Send" />
+                        </div>
+
+
+                        @*<div id='chatroom' ></div>*@
+                        @*<textarea id="chatroom" rows="5" cols="40"></textarea>*@
+                        <div id="chatusers">
+                            <p><b>All users</b></p>
+                        </div>
+                    </div>
+                    <input id="hdId" type="hidden" />
+                    <input id="username" type="hidden" />
+                    @*</div>*@
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+    @*<script src="js/javascript.js" type="text/javascript"></script>*@
+
+</body>
+</html>

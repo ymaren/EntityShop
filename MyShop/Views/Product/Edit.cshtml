@@ -1,0 +1,87 @@
+﻿@model MyShop.Models.MyShopModels.Product
+
+@{
+    ViewBag.Title = Model != null ? "Edit product " : "Add new product";
+    Layout = null;
+    @Styles.Render("~/Content/css")
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+}
+
+
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { Model, enctype = "multipart/form-data" }))
+{
+    
+        <fieldset class="col-md-10 col-md-offset-1 alert-info border-dark">
+            <legend> <strong>@ViewBag.Title</strong> </legend>
+            @*@Html.EditorFor(model=>model.Id)*@
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            <strong>@Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            <strong>@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            <strong>@Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            <strong>@Html.LabelFor(model => model.ProductGroup.GroupName, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.DropDownListFor(model => model.ProductGroupId, ViewBag.Groups as SelectList)
+                            @Html.ValidationMessageFor(model => model.ProductGroupId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <img src=@Url.Content( string.Format("/Pictures/{0}.jpg",@Model.Id)) align="right" hspace="120" vspace="5" height="195">
+                    <input type="file" name="upload" /> <input type="submit" value="Load" class="btn btn-success" />
+                    @Ajax.ActionLink(" 8", "Load", new AjaxOptions { UpdateTargetId = "CredentialRezult"})
+                </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <strong>@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                    </div>
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-info" })
+                    </div>
+                </div>
+</fieldset>
+    
+}

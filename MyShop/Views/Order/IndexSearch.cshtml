@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MyShop.Models.MyShopModels.Order>
+
+     <tr>
+        <td colspan ="6">
+         <strong> Total sum </strong>
+        </td>
+        
+           <td>
+            @Model.Sum(c=>c.OrderAmount)
+           </td>
+         
+        <td>
+            
+       </td>
+    </tr>
+
+ @{
+     int i = 1;
+ } 
+ @foreach (var item in Model)
+ {
+    
+        <tr>
+            <td>
+               @(i++)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.ActionLink(item.OrderNumber, "Edit", new { item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderType.OrderTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderAmount)
+            </td>
+
+            <td class="text-center">
+                @using (Html.BeginForm("Delete", "Order"))
+                {
+                    @Html.Hidden("Id", item.Id)
+                    <input type="submit"
+                           class="btn btn-danger"
+                           value="Delete" />
+                }
+            </td>
+        </tr>
+ }

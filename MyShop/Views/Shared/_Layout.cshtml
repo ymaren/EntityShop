@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+   
+    <div class="container ">
+        <div>
+            <div class="row justify-content-around">
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "col-md-2  bg-success text-dark align-self-center order-md-1" })
+                @Html.ActionLink("Home", "Index", "Home", new { @class = "col-md-1 bg-warning text-dark align-self-center order-md-2" })
+                @Html.ActionLink("About", "About", "Home", new { @class = "col-md-1  bg-dark text-dark align-self-center order-md-3" })
+                @Html.ActionLink("Contact", "Contact", "Home", new { @class = "col-md-1  bg-success text-dark align-self-center order-md-4" })
+                @*@Html.Partial("_LoginPartial")*@
+
+
+                <div class="offset-md-1 order-md-5">@Html.Action("_LoginPartial", "Cart")</div>
+            </div>
+            
+        </div>
+        @*<div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            
+        </div>*@
+    </div>
+    
+
+    <div class="row panel">
+    <div id="categories" class="col-xs-2">
+        @Html.Action("VerticalMenu", "Home")
+    </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,131 @@
+﻿@model MyShop.Models.UserViewModel
+@using MyShop.Models.MyShopModels
+@using MvcCheckBoxList.Model
+@{
+    ViewBag.Title = Model != null ? "Edit user" : "Add new user";
+    Layout = null;
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/scripts/jquery-3.3.1.min.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+  
+
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#DropDownUserRole").change(function () {
+            var selectedValue = $("#DropDownUserRole").val();
+            //alert(selectedValue);
+            $("#CredentialRezult").load('@(Url.Action("RoleTemplateIndexSearch", "User",null, Request.Url.Scheme))?UserRoleId=' + selectedValue);
+        });
+    });  
+
+   
+     $(document).ready(function () {
+         $("#ShowHideCredentional").click(function () {
+
+             if ($('#CredentialRezult').is(':visible')) {
+                
+                 $('#CredentialRezult').fadeOut(300);
+                 $('#ShowHideCredentional').val("Show credentials");
+             }
+             else
+             {
+                
+                 $('#CredentialRezult').fadeIn(300);
+                 $('#ShowHideCredentional').val("Hide credentials");
+             }           
+        });
+    });
+</script>
+
+
+@using (Html.BeginForm("CreateChange", "User"))
+{
+    <div class="row">
+        <div class="col-1"></div>
+        <fieldset class="col-md-7 col-md-offset-1 alert-info border-dark">
+            <legend> <strong>@ViewBag.Title</strong> </legend>
+            @Html.HiddenFor(m => Model.user.Id)
+            <div>
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <strong>@Html.LabelFor(model => model.user.UserEmail, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                    </div>
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.user.UserEmail, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.user.UserEmail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <strong>@Html.LabelFor(model => model.user.UserName, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                    </div>
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.user.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.user.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <strong>@Html.LabelFor(model => model.user.UserPassword, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                    </div>
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.user.UserPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.user.UserPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <strong>@Html.LabelFor(model => model.user.UserCountry, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                    </div>
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.user.UserCountry, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.user.UserCountry, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <strong>@Html.LabelFor(model => model.user.UserAddress, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                    </div>
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.user.UserAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.user.UserAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <strong>@Html.Label("UserRole", htmlAttributes: new { @class = "col-md-2" })</strong>
+                    </div>
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(model => model.user.UserRoleId, ViewBag.Roles as SelectList, "Select User Role", new { @id = "DropDownUserRole" })
+                        @Html.ValidationMessageFor(model => model.user.UserRoleId, "", new { @class = "text-danger" })
+
+                        <input type="button" id="ShowHideCredentional" value="Hide credentials">
+                    </div>
+                </div>
+                <div id="CredentialRezult">
+                    @*@Ajax.ActionLink(" ", "RoleTemplateIndexSearch", new AjaxOptions {UpdateTargetId = "CredentialRezult",
+        Url = Url.Action("RoleTemplateIndexSearch", new { @UserRoleId = Model.user.UserRoleId }) })*@
+                    
+                    @Html.Partial("RoleTemplateIndexSearch")
+
+                </div>
+            
+
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-info" })
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+}

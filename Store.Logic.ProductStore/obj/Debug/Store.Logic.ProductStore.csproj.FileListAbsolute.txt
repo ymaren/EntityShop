@@ -1,0 +1,13 @@
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\bin\Debug\Store.Logic.ProductStore.dll
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\bin\Debug\Store.Logic.ProductStore.pdb
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\bin\Debug\Core.Common.dll
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\bin\Debug\Store.Logic.Entity.dll
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\bin\Debug\Core.Common.pdb
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\bin\Debug\Store.Logic.Entity.pdb
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\obj\Debug\Store.Logic.ProductStore.csprojAssemblyReference.cache
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\obj\Debug\Store.Logic.ProductStore.csproj.CoreCompileInputs.cache
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\obj\Debug\Store.Logic.ProductStore.csproj.CopyComplete
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\obj\Debug\Store.Logic.ProductStore.dll
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\obj\Debug\Store.Logic.ProductStore.pdb
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\bin\Debug\System.Web.Mvc.dll
+C:\Users\yevhen.marenkov\source\repos\MyShop\Store.Logic.ProductStore\bin\Debug\System.Web.Mvc.xml

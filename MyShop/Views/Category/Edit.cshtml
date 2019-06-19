@@ -1,0 +1,46 @@
+﻿@model MyShop.Models.MyShopModels.ProductCategory
+
+@{
+    ViewBag.Title = (Model != null ? "Edit product category" : "Add new category");
+    Layout = null;
+    @Styles.Render("~/Content/css")
+}
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-1"></div>
+        <fieldset class="col-md-7 col-md-offset-1 alert-info border-dark">
+            <legend> <strong>@ViewBag.Title</strong> </legend>
+            <div>
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <strong>@Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                    </div>
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>@Html.LabelFor(model => model.CategoryDescription, htmlAttributes: new { @class = "form-control-static col-md-2" })</strong>
+                    </div>
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.CategoryDescription, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CategoryDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-info" })
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+}
+

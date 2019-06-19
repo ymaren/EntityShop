@@ -1,0 +1,20 @@
+﻿@model IEnumerable<MyShop.Models.MyShopModels.User>
+ @foreach (var item in Model)
+ {
+    <tr>
+        <td> @Html.DisplayFor(modelItem => item.Id, new { @class = "text-right" }) </td>
+        <td> @Html.ActionLink(item.UserEmail, "CreateChange", new { item.Id, @class = "text-right" }) </td>
+        <td> @Html.DisplayFor(modelItem => item.UserName, new { @class = "text-right" }) </td>
+        <td> @Html.DisplayFor(modelItem => item.UserRole.UserRoleName, new { @class = "text-right" }) </td>
+
+        <td class="text-center">
+            @using (Html.BeginForm("Delete", "User"))
+            {
+                @Html.Hidden("UserId", item.Id)
+                <input type="submit"
+                       class="btn btn-danger"
+                       value="Удалить" />
+            }
+        </td>
+    </tr>
+ }

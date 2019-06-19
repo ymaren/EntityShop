@@ -1,0 +1,56 @@
+﻿@model MyShop.Models.MyShopModels.ProductGroup
+
+@{
+    ViewBag.Title = Model != null ? "Edit product group" : "Add new group";
+    Layout = null;
+    @Styles.Render("~/Content/css")
+}
+
+@using (Html.BeginForm())
+{            
+    <div class="row">
+    <div class="col-1"></div>
+    <fieldset class="col-md-7 col-md-offset-1 alert-info border-dark">
+        <legend> <strong>@ViewBag.Title</strong> </legend>
+        <div>
+            <div class="row">
+                <div class="col-md-3 ">
+                    <strong>@Html.LabelFor(model => model.GroupName, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                </div>
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.GroupName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-3 ">
+                    <strong>@Html.LabelFor(model => model.GroupDescription, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+                </div>
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.GroupDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GroupDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-3 ">
+                    <strong>@Html.Label("Category", htmlAttributes: new { @class = "col-md-2" })</strong>
+                </div>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.ProductCategoryid, ViewBag.Categories as SelectList, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ProductCategoryid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-info" })
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    </div>
+}
+

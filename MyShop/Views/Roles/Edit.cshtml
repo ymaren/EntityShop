@@ -1,0 +1,63 @@
+﻿@model MyShop.Models.RoleViewModel
+@using MyShop.Models.MyShopModels
+@using MvcCheckBoxList.Model
+@{
+    ViewBag.Title = Model != null ? "Edit role" : "Add new role";
+    Layout = null;
+   
+        @Styles.Render("~/Content/css")
+ }
+        @using (Html.BeginForm("Edit", "Roles"))
+        {
+<div class="row">
+    <div class="col-1"></div>
+    <fieldset class="col-md-8 col-md-offset-1 alert-info border-dark">
+        <legend> <strong>@ViewBag.Title</strong> </legend>
+        @Html.HiddenFor(model => model.userRole.Id)
+        <div>
+            <strong>@Html.LabelFor(model => model.userRole.UserRoleName, htmlAttributes: new { @class = "form-control-static col-md-2 text-center" })</strong>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.userRole.UserRoleName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.userRole.UserRoleName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+
+        <ul type="none">
+            @{
+                List<Credential> list = Model.allCredential;
+            }
+            @foreach (MyShop.Models.MyShopModels.Credential g in Model.allCredential.Where(c => c.ParentCredentialId == 0))
+            {
+                <ul type="none">
+                    <li>
+                        <input type="checkbox"
+                               name="SelectedCredential" value="@g.Id" id="@g.Id"
+                               @{if (Model.userRole != null && Model.userRole.Credential.Exists(c => c.Id == g.Id)) { <text> checked='checked' </text>  } } />
+                        <label for="@g.Id"><strong>@g.FullNameCredential  </strong> </label>
+                        @foreach (MyShop.Models.MyShopModels.Credential subCred in @list.Where(c => c.ParentCredentialId == g.Id))
+                        {
+                            <ul type="none">
+                                <li>
+                                    <input type="checkbox"
+                                           name="SelectedCredential" value="@subCred.Id" id="@subCred.Id"
+                                           @{if (Model.userRole != null && Model.userRole.Credential.Exists(c => c.Id == subCred.Id)) { <text> checked='checked' </text>  } } />
+                                    <label for="subCred.Id">@subCred.FullNameCredential</label>
+                                </li>
+                            </ul>
+                        }
+
+                    </li>
+                </ul>
+            }
+        </ul>
+        <div class="col-md-offset-1 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-info" })
+        </div>
+
+
+    </fieldset>
+   
+</div>
+        }

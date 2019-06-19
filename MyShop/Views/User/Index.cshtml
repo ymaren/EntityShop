@@ -1,0 +1,62 @@
+﻿@model IEnumerable<MyShop.Models.MyShopModels.User>
+@{
+    ViewBag.Title = "Users list";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+    @Scripts.Render("~/scripts/jquery-3.3.1.min.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+
+    var _options = new AjaxOptions()
+    {
+        UpdateTargetId = "tableUserData",
+        Url = Url.Action("IndexSearch"),
+        LoadingElementId = "loadIndicator"
+    };
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>User list</h3>
+    </div>
+    <div>
+        @using (Ajax.BeginForm("IndexSearch", _options))
+        {
+            <div>
+                <table class ="table-hover">
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Add new USER", "CreateChange", null, new { @class = "btn btn-success" })
+                        </td>
+                        <td>
+                            @Html.DropDownList("UserRoleId", ViewBag.Roles as SelectList, "Select User Role", new { onChange = "$(this).parents('form:first').find(':submit')[0].click();", @class = "btn btn-secondary dropdown-toggle" })
+                        </td>
+                        <td><input type="submit" value="Filter" class="btn btn-info" style="display:none;" /> </td>
+                        <td>
+                            <img id="loadIndicator" style="display:none" src=@Url.Content( string.Format("/Pictures/Service/UserSearch.gif"))>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+        }
+
+
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-condensed table-bordered table-hover">
+            <tr>
+
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.UserEmail)</th>
+                <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                <th>@Html.DisplayNameFor(model => model.UserRole.UserRoleName)</th>
+                <th class="text-center">Action</th>
+            </tr>
+            <tbody id="tableUserData">
+                @Html.Action("IndexSearch", new { StartDate = Model, FinishDate = Model, OrderTypeId = Model })
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

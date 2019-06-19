@@ -1,0 +1,85 @@
+﻿@model IEnumerable<MyShop.Models.MyShopModels.Order>
+
+@{
+    ViewBag.Title = "Orders list";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+    @Styles.Render("~/Content/css");
+
+    @Scripts.Render("~/scripts/jquery-3.3.1.min.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+    var _options = new AjaxOptions()
+    {
+        UpdateTargetId = "tableOrderData",
+        Url = Url.Action("IndexSearch"),
+        LoadingElementId = "loadIndicator"
+    };
+
+    DateTime CurrentDate = DateTime.Now.Date;
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Order list</h3>
+    </div>
+
+    @using (Ajax.BeginForm("IndexSearch", _options))
+    {
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <div id="EditForm">
+                            @Html.ActionLink("Add new order", "Edit", null, new { @class = "btn btn-success" })
+                        </div>
+
+                    </td>
+                    <td><strong> @Html.Label("Order from")</strong>  </td>
+                    <td>@Html.TextBox("StartDate", @CurrentDate, new { @type = "date", @class = "form-control datepicker" })</td>
+                    <td><strong> @Html.Label("Order to")</strong>  </td>
+                    <td>@Html.TextBox("FinishDate", "Enter Date", new { @type = "date", @class = "form-control datepicker" })
+                    <td>
+                        @Html.DropDownList("OrderToUser", ViewBag.Users as SelectList, "Select user", new { @class = "btn btn-secondary dropdown-toggle" })
+                    </td>
+                    <td>
+                        @Html.DropDownList("OrderTypeId", ViewBag.OrderTypes as SelectList, "Select Order type", new { @class = "btn btn-secondary dropdown-toggle" })
+                    </td>
+                    <td><input type="submit" value="Filter" class="btn btn-info" /> </td>
+                    <td>
+                        <img id="loadIndicator" style="display:none" src=@Url.Content( string.Format("/Pictures/Service/OrdersSearch.gif"))>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+
+    <table class="table table-striped table-condensed table-bordered table-hover">
+        <tr>
+            <th>
+                @Html.DisplayName("#")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderType.OrderTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderAmount)
+            </th>
+
+            <th class="text-center">Action</th>
+        </tr>
+        <tbody id="tableOrderData">
+            @Html.Action("IndexSearch", new { UserRoleId = Model })
+        </tbody>
+    </table>
+</div>
+
